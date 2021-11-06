@@ -90,6 +90,10 @@ def logout():
 def dashboard():
   return render_template('dashboard.html')
 
+@app.route('/')
+def index():
+  return render_template('index.html')
+
 @app.route('/buttons')
 @login_required
 def buttons():

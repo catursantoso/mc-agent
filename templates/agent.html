@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block _content %}
+<div class="container-fluid">
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Agent</h1>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Nama</th>
+        <th scope="col">Username</th>
+        <th scope="col">Email</th>
+        <th scope="col" >Level Akses</th>
+        <th scope="col" class="text-center">Aksi</th>
+      </tr>
+    </thead>
+    {% for a in data %}
+    <tbody>
+      <tr>
+        <td>{{ a['name'] }}</td>
+        <td>{{ a['username'] }}</td>
+        <td>{{ a['email'] }}</td>
+        <td>{{ a['access'] }}</td>
+        <td class="text-center">
+          <a href="/agent/ubah/{{ a.id }}">Ubah |</a>
+          <a href="/agent/hapus/{{ a.id }}">Hapus</a>
+        </td>
+      </tr>
+    </tbody>
+    {% endfor %}
+  </table>
+</div>
+
+
+{% endblock %}

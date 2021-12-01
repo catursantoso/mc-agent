@@ -55,7 +55,7 @@
       <div class="sidebar-heading">
         Interface
       </div>
-      
+
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -65,12 +65,12 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Custom Components:</h6>
-            <a class="collapse-item" href="/buttons">Buttons</a>
+            <a class="collapse-item" href="/agent">Agent</a>
             <a class="collapse-item" href="/cards">Cards</a>
           </div>
         </div>
       </li>
-      
+
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
@@ -343,6 +343,17 @@
 
         <!-- Pintasan -->
         <div>
+          <div class="container text-center" style="width: 70%;">
+            {% with messages = get_flashed_messages(with_categories = true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }} mt-4" role="alert">
+              {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+          </div>
           {% block _content %}
           {% endblock %}
         </div>

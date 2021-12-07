@@ -2,7 +2,6 @@ from flask import Flask, render_template, url_for, redirect, session, request
 import firebase_admin
 from firebase_admin import credentials, firestore
 from flask.helpers import flash
-from flask.templating import render_template_string
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 
@@ -136,7 +135,7 @@ def ubah_agent(uid):
     data = {
       'name': request.form['name'],
       'username': request.form['username'],
-      'access': request.form['access']
+      'access': request.form['access'],
     }
     db.collection('users').document(uid).set(data, merge = True)
     flash('Selamat! data anda berhasil di ubah', 'primary')
@@ -157,6 +156,26 @@ def hapus_agent(uid):
 @admin_required
 def buttons():
   return render_template('buttons.html')
+
+@app.route('/profile')
+def profile():
+  return render_template('profile.html')
+
+# @app.route('/profile/ubah', methods = ['GET', 'POST'])
+# def ubah_profile(uid):
+#   if request.method == 'POST':
+#     data = {
+#       'name': request.form['name'],
+#       'username': request.form['username'],
+#       'alamat': request.form['alamat'],
+#       'npwp': request.form['npwp']
+#     }
+#     db.collection('users').document(uid).set(data, merge = True)
+#     flash('Selamat! Profil anda berhasil diubah', 'success')
+#     return redirect(url_for('profile'))
+#   user = db.collection('users').document(uid).get().to_dict()
+#   user['id'] = uid
+#   return render_template('ubah_profile.html')
 
 @app.route('/cards')
 @login_required

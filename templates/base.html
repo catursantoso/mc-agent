@@ -48,6 +48,7 @@
         </a>
       </li>
       
+      {% if session['user']['access'] == 'admin' %}
       <!-- Divider -->
       <hr class="sidebar-divider">
       
@@ -55,12 +56,12 @@
       <div class="sidebar-heading">
         Interface
       </div>
-
+      
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-cog"></i>
-          <span>Components</span>
+          <span>Anggota</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
@@ -70,7 +71,7 @@
           </div>
         </div>
       </li>
-
+      
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
@@ -93,14 +94,14 @@
       
       <!-- Heading -->
       <div class="sidebar-heading">
-        Addons
+        Laporan Keuangan
       </div>
       
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
           <i class="fas fa-fw fa-folder"></i>
-          <span>Pages</span>
+          <span>Neraca</span>
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
@@ -109,9 +110,9 @@
             <!-- <a class="collapse-item" href="register.html">Register</a> -->
             <!-- <a class="collapse-item" href="forgot-password.html">Forgot Password</a> -->
             <!-- <div class="collapse-divider"></div> -->
-            <h6 class="collapse-header">Other Pages:</h6>
-            <a class="collapse-item" href="/error">404 Page</a>
-            <a class="collapse-item" href="/error">Blank Page</a>
+            <h6 class="collapse-header">Periode:</h6>
+            <a class="collapse-item" href="/error">Neraca</a>
+            <a class="collapse-item" href="/error">Neraca Lajur</a>
           </div>
         </div>
       </li>
@@ -120,17 +121,17 @@
       <li class="nav-item">
         <a class="nav-link" href="/error">
           <i class="fas fa-fw fa-chart-area"></i>
-          <span>Charts</span>
+          <span>Laporan Posisi Keuangan</span>
         </a>
       </li>
-      
       <!-- Nav Item - Tables -->
       <li class="nav-item">
         <a class="nav-link" href="/error">
           <i class="fas fa-fw fa-table"></i>
-          <span>Tables</span>
+          <span>Arus kas</span>
         </a>
       </li>
+      {% endif %}
       
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
@@ -317,12 +318,12 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ session ['user']['username'] }}</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ session.user.username }}</span>
                 <img class="img-profile rounded-circle" src="/static/img/undraw_profile.svg">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="/profile">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>Profile
                 </a>
                 <a class="dropdown-item" href="#">
@@ -340,7 +341,7 @@
           </ul>
         </nav>
         <!-- End of Topbar -->
-
+        
         <!-- Pintasan -->
         <div>
           <div class="container text-center" style="width: 70%;">
@@ -358,7 +359,7 @@
           {% endblock %}
         </div>
         <!-- Akhir Pintasan -->
-
+        
       </div>
       <!-- End of Main Content -->
       

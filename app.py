@@ -2,6 +2,7 @@ from flask import Flask, render_template, url_for, redirect, session, request
 import firebase_admin
 from firebase_admin import credentials, firestore
 from flask.helpers import flash
+from flask.templating import render_template_string
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 
@@ -55,6 +56,7 @@ def login():
     if user:
       if check_password_hash(user['password'], data['password']):
         session['user'] = user
+        session['userId'] = us.id
         return redirect(url_for('dashboard'))
       else:
         flash('Sorry, your password is wrong !!', 'danger')
@@ -72,7 +74,7 @@ def register():
       'name': request.form['name'],
       'username': request.form['username'],
       'email': request.form['email'],
-      'access': request.form['access'],
+      'access': 'Basic Level Akses',
       'password': request.form['password']
     }
     
@@ -135,7 +137,7 @@ def ubah_agent(uid):
     data = {
       'name': request.form['name'],
       'username': request.form['username'],
-      'access': request.form['access'],
+      'access': request.form['access']
     }
     db.collection('users').document(uid).set(data, merge = True)
     flash('Selamat! data anda berhasil di ubah', 'primary')
@@ -159,23 +161,30 @@ def buttons():
 
 @app.route('/profile')
 def profile():
+  session['user'] = db.collection('users').document(session['userId']).get().to_dict()
   return render_template('profile.html')
 
-# @app.route('/profile/ubah', methods = ['GET', 'POST'])
-# def ubah_profile(uid):
-#   if request.method == 'POST':
-#     data = {
-#       'name': request.form['name'],
-#       'username': request.form['username'],
-#       'alamat': request.form['alamat'],
-#       'npwp': request.form['npwp']
-#     }
-#     db.collection('users').document(uid).set(data, merge = True)
-#     flash('Selamat! Profil anda berhasil diubah', 'success')
-#     return redirect(url_for('profile'))
-#   user = db.collection('users').document(uid).get().to_dict()
-#   user['id'] = uid
-#   return render_template('ubah_profile.html')
+
+@app.route('/profile/ubah/<uid>', methods = ['GET', 'POST'])
+def ubah_profile(uid):
+  if request.method == 'POST':
+    # docRef = db.collection('users').document(session['userId'])
+    data = {
+      'name': request.form['name'],
+      'username': request.form['username'],
+      'email': request.form['email'],
+      'alamat': request.form['alamat'],
+      'npwp': request.form['npwp']
+    }
+    # docRef.update(data)
+    # session['user'] = data
+    db.collection('users').document(uid).set(data, merge = True)
+    flash('Selamat! Profil anda berhasil diubah', 'success')
+    return redirect(url_for('profile'))
+  # user = db.collection('users').document(uid).get().to_dict()
+  # user['id'] = uid
+  session['user'] = db.collection('users').document(session['userId']).get().to_dict()
+  return render_template('ubah_profile.html')
 
 @app.route('/cards')
 @login_required
